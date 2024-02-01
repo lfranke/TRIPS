@@ -35,7 +35,7 @@ Software Requirement: Conda (Anaconda/Miniconda)
 
 ## Install Instructions Linux
 
-* Install Ubuntu Dependancies
+### Install Ubuntu Dependancies
 ```
 sudo apt install git build-essential gcc-9 g++-9
 ```
@@ -45,7 +45,7 @@ sudo apt install xorg-dev
 ```
 (There exists a headless mode without window management meant for training on a cluster, see below)
 
-* Clone Repo
+### Clone Repo
 ```
 git clone git@github.com:lfranke/TRIPS.git
 cd TRIPS/
@@ -57,14 +57,14 @@ cd TRIPS
 ./create_environment.sh
 ```
 
-* Install Pytorch
+### Install Pytorch
 
  ```shell
 cd TRIPS
 ./install_pytorch_precompiled.sh
 ```
 
-* Compile TRIPS
+### Compile TRIPS
 
 ```shell
 cd TRIPS
