@@ -97,6 +97,13 @@ make can take a long time, especially for some CUDA files.
 
     [Start VS2022 once for CUDA integration setup]
 
+## Clone Repo
+```
+git clone git@github.com:lfranke/TRIPS.git
+cd TRIPS/
+git submodule update --init --recursive --jobs 0
+```
+
 ### Setup Environment
 
 ```shell
