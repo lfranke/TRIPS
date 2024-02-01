@@ -203,7 +203,7 @@ The most important keyboard shortcuts are:
   * F1: Switch to 3DView
   * F2: Switch to neural view
   * F3: Switch to split view (default)
-  * F2: Switch to point rendering view
+  * F4: Switch to point rendering view
   * WASD: Move camera
   * Center Mouse + Drag: Rotate around camera center
   * Left Mouse + Drag: Rotate around world center
