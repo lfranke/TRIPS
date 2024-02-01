@@ -1,9 +1,9 @@
-[submodule "External/tiny-cuda-nn"]
-	path = External/tiny-cuda-nn
-	url = ../../lfranke/tiny-cuda-nn.git
 [submodule "External/tensorboard_logger"]
 	path = External/tensorboard_logger
 	url = ../../RustingSword/tensorboard_logger.git
 [submodule "External/saiga"]
 	path = External/saiga
 	url = ../../lfranke/saiga.git
+[submodule "External/tiny-cuda-nn"]
+	path = External/tiny-cuda-nn
+	url = ../../lfranke/tiny-cuda-nn.git
