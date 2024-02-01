@@ -235,7 +235,7 @@ Linux:
 ```
 Windows:
 ```shell
-./sbuild/bin/RelWithDebInfo/train.exe --config configs/train_normalnet.ini
+./build/bin/RelWithDebInfo/train.exe --config configs/train_normalnet.ini
 ```
 
 Make again sure that the working directory is the root.
