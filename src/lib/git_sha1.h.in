@@ -1,0 +1,9 @@
+﻿/**
+ * Copyright (c) 2024 Darius Rückert and Linus Franke
+ * Licensed under the MIT License.
+ * See LICENSE file for more information.
+ */
+
+#pragma once
+
+#define GIT_SHA1 "@MY_GIT_SHA1@"
