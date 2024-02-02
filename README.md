@@ -269,7 +269,7 @@ Windows:
 Make again sure that the working directory is the root.
 Otherwise, the loss models will not be found.
 
-Two configs are given for the two networks used in the Paper: train_normalnet.ini and train_sphericalnet.ini
+Two configs are given for the two networks used in the paper: train_normalnet.ini and train_sphericalnet.ini
 You can override the options in these configs easily via the command line.
 
 ```shell
@@ -288,6 +288,13 @@ If GPU memory is sparse, consider lowering  `batch_size` (standard is 4),  `inne
 --TrainParams.train_crop_size 256
 ```
 (however this may impact quality).
+
+By default, every 8th image is removed during training and used as a test image. If you want to change this split, consider overriding which percentage of images should be kept out of training with:
+
+```shell
+--TrainParams.train_factor 0.1 
+```
+default is 0.125 (so 1/8).
 
 
 ### Live Viewer during Training
