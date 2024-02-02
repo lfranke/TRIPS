@@ -52,6 +52,7 @@ cd TRIPS/
 git submodule update --init --recursive --jobs 0
 ```
 
+### Create Conda Environment
 ```shell
 cd TRIPS
 ./create_environment.sh
