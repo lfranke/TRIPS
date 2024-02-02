@@ -59,10 +59,22 @@ cd TRIPS
 
 ### Install Pytorch
 
- ```shell
+```shell
 cd TRIPS
 ./install_pytorch_precompiled.sh
 ```
+
+### Install CuDNN
+
+Either download the latest version and add it to the conda environment (where CUDA 11.8 was installed) or install via conda:
+
+```shell
+conda activate trips
+conda install -y -c conda-forge cudnn=8.9.2
+```
+
+For our experiments, we used CuDNN 8.9.5, however the conda installed version (8.9.2) should also work fine.
+
 
 ### Compile TRIPS
 
@@ -85,6 +97,22 @@ make -j10
 
 ```
 make can take a long time, especially for some CUDA files.
+
+If you get a `undefined reference to ...@GLIBCXX_3.4.30' ` error during linking, most likely your linker fails to resolve the global and conda version of the c++ standard library.
+
+Consider removing the libstdc++ lib from the conda environment:
+
+```shell
+cd TRIPS
+
+conda activate trips
+
+export CONDA=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
+
+rm $CONDA_PREFIX/lib/libstdc++.so*
+```
+
+
 
 ## Install Instructions Windows
 
