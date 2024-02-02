@@ -184,7 +184,7 @@ For our experiments, we used CuDNN 8.9.5, however the conda installed version (8
 ### Compile
 
 ```shell
-cmake -Bbuild -DCMAKE_CUDA_COMPILER="%CUDA_PATH%\bin\nvcc.exe" -DCMAKE_PREFIX_PATH=".\External\libtorch" -DCONDA_P_PATH="$ENV:CONDA_PREFIX" -DCUDA_P_PATH="%CUDA_PATH%" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+cmake -Bbuild -DCMAKE_CUDA_COMPILER="%CUDA_PATH%\bin\nvcc.exe" -DCMAKE_PREFIX_PATH=".\External\libtorch" -DCONDA_P_PATH="%CONDA_PREFIX%" -DCUDA_P_PATH="%CUDA_PATH%" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 ```
 ```shell
 cmake --build build --config RelWithDebInfo -j
