@@ -67,7 +67,7 @@ cd TRIPS
 
 ### Install CuDNN
 
-Either download the latest version and add it to the conda environment (where CUDA 11.8 was installed) or install via conda:
+Either download the latest version and add it to the conda environment (where CUDA 11.8 was installed, this [article](https://medium.com/geekculture/install-cuda-and-cudnn-on-windows-linux-52d1501a8805) is a useful resource) or install via conda:
 
 ```shell
 conda activate trips
@@ -170,11 +170,21 @@ TRIPS/
     src/
     ...
 ```
+### Install CuDNN
+
+Either download the latest version and add it to the conda environment (where CUDA 11.8 was installed, this [article](https://medium.com/geekculture/install-cuda-and-cudnn-on-windows-linux-52d1501a8805) is a useful resource) or install via conda:
+
+```shell
+conda activate trips
+conda install -y -c conda-forge cudnn=8.9.2
+```
+
+For our experiments, we used CuDNN 8.9.5, however the conda installed version (8.9.2) should also work fine.
 
 ### Compile
 
 ```shell
-cmake -Bbuild -DCMAKE_CUDA_COMPILER="$ENV:CUDA_PATH\bin\nvcc.exe" -DCMAKE_PREFIX_PATH=".\External\libtorch" -DCONDA_P_PATH="$ENV:CONDA_PREFIX" -DCUDA_P_PATH="$ENV:CUDA_PATH" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+cmake -Bbuild -DCMAKE_CUDA_COMPILER="%CUDA_PATH%\bin\nvcc.exe" -DCMAKE_PREFIX_PATH=".\External\libtorch" -DCONDA_P_PATH="%CONDA_PREFIX%" -DCUDA_P_PATH="%CUDA_PATH%" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 ```
 ```shell
 cmake --build build --config RelWithDebInfo -j
