@@ -200,7 +200,7 @@ The last cmake build call can take a lot of time.
 
 ## Running on pretrained models
 
-Supplemental materials link: [https://zenodo.org/records/10606698](https://zenodo.org/records/10606698)
+Supplemental materials link: [https://zenodo.org/records/10641253](https://zenodo.org/records/10641253)
 
 After a successful compilation, the best way to get started is to run `viewer` on the *tanks and temples* scenes
 using our pretrained models.
