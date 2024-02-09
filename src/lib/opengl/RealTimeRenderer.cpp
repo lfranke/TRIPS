@@ -538,6 +538,7 @@ void RealTimeRenderer::imgui()
             }
             ImGui::ListBoxFooter();
         }
+#endif
         ImGui::SetNextItemWidth(600);
         if (ImGui::ListBoxHeader("###experiments", 10))
         {
@@ -567,6 +568,8 @@ void RealTimeRenderer::imgui()
             }
             ImGui::ListBoxFooter();
         }
+#ifndef MINIMAL_GUI
+
 
         ImGui::Checkbox("use_center_tensor", &use_center_tensor);
         ImGui::Checkbox("use_custom_camera", &use_custom_camera);
