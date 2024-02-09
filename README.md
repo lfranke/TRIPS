@@ -89,6 +89,8 @@ export CC=gcc-9
 export CXX=g++-9
 export CUDAHOSTCXX=g++-9
 
+unset CUDA_HOME
+
 mkdir build
 cd build
 
@@ -117,11 +119,11 @@ rm $CONDA/lib/libstdc++.so*
 
 ## Install Instructions Windows
 
-### Software Requirements:
+### Software Requirements
 
 * VS2022
-* CUDA 11.8
-* Cudnn (copy into 11.8 folder as per install instructions) (we used version 8.9.7)
+* CUDA 11.8 (make sure to at least include Nsight NVTX, Development/* , Runtime/Libraries/* and the Visual Studio Integration) 
+* Cudnn (copy into 11.8 folder as per install instructions, see below)
 * conda (we used Anaconda3)
 
     [Start VS2022 once for CUDA integration setup]
@@ -154,7 +156,7 @@ conda install -y -c intel mkl-static=2024.0.0
 conda install openmp=8.0.1 -c conda-forge
 ```
 
-### Install libtorch:
+### Install libtorch
 
 
 * Download: https://download.pytorch.org/libtorch/cu116/libtorch-win-shared-with-deps-1.13.1%2Bcu116.zip
