@@ -110,7 +110,7 @@ conda activate trips
 
 export CONDA=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
 
-rm $CONDA_PREFIX/lib/libstdc++.so*
+rm $CONDA/lib/libstdc++.so*
 ```
 
 
@@ -126,11 +126,17 @@ rm $CONDA_PREFIX/lib/libstdc++.so*
 
     [Start VS2022 once for CUDA integration setup]
 
+### Install CuDNN
+
+Download the latest version and add it to the CUDA 11.8 installation (this [article](https://medium.com/geekculture/install-cuda-and-cudnn-on-windows-linux-52d1501a8805) is a useful resource).
+
+We used CuDNN 8.9.7, however similar versions should also work fine.
+
 ### Clone Repo
 ```
 git clone git@github.com:lfranke/TRIPS.git
 cd TRIPS/
-git submodule update --init --recursive --jobs 0
+git submodule update --init --recursive --jobs 8
 ```
 
 ### Setup Environment
@@ -170,22 +176,21 @@ TRIPS/
     src/
     ...
 ```
-### Install CuDNN
 
-Either download the latest version and add it to the conda environment (where CUDA 11.8 was installed, this [article](https://medium.com/geekculture/install-cuda-and-cudnn-on-windows-linux-52d1501a8805) is a useful resource) or install via conda:
 
-```shell
-conda activate trips
-conda install -y -c conda-forge cudnn=8.9.2
-```
+### Compile  TRIPS
 
-For our experiments, we used CuDNN 8.9.5, however the conda installed version (8.9.2) should also work fine.
-
-### Compile
-
+Configure (if you use the conda prompt shell):
 ```shell
 cmake -Bbuild -DCMAKE_CUDA_COMPILER="%CUDA_PATH%\bin\nvcc.exe" -DCMAKE_PREFIX_PATH=".\External\libtorch" -DCONDA_P_PATH="%CONDA_PREFIX%" -DCUDA_P_PATH="%CUDA_PATH%" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 ```
+
+OR: Configure (if you use the conda powershell):
+```shell
+cmake -Bbuild -DCMAKE_CUDA_COMPILER="$ENV:CUDA_PATH\bin\nvcc.exe" -DCMAKE_PREFIX_PATH=".\External\libtorch" -DCONDA_P_PATH="$ENV:CONDA_PREFIX" -DCUDA_P_PATH="$ENV:CUDA_PATH" -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+```
+
+Compile (both shells):
 ```shell
 cmake --build build --config RelWithDebInfo -j
 ```
@@ -270,6 +275,10 @@ The basic syntax is:
 
 Linux:
 ```shell
+conda activate trips
+export CONDA=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
+
 ./build/bin/train --config configs/train_normalnet.ini
 ```
 Windows:
