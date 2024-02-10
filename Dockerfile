@@ -46,5 +46,5 @@ COPY CMakeLists.txt .
 
 RUN mkdir build && \
     cd build && \
-    ../cmake-3.28.3-linux-x86_64/bin/cmake -DHEADLESS=ON -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
+    ../cmake-3.28.3-linux-x86_64/bin/cmake -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
     make -j10
