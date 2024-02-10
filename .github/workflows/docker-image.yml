@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v3
     - name: Get submodules
       run: git submodule update --init --recursive --jobs 0
-    - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag trips:$(date +%s)
