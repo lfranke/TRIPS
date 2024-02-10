@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY External External
 RUN cd External && \
     wget -nv https://download.pytorch.org/libtorch/cu118/libtorch-cxx11-abi-shared-with-deps-2.2.0%2Bcu118.zip -O  libtorch.zip && \
-    unzip libtorch.zip -d .
+    unzip -qq libtorch.zip -d .
 
 RUN wget -nv https://github.com/Kitware/CMake/releases/download/v3.28.3/cmake-3.28.3-linux-x86_64.tar.gz && \
     tar xzf cmake-3.28.3-linux-x86_64.tar.gz
@@ -47,4 +47,4 @@ COPY CMakeLists.txt .
 RUN mkdir build && \
     cd build && \
     ../cmake-3.28.3-linux-x86_64/bin/cmake -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
-    make -j10
+    make -j6
