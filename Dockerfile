@@ -28,6 +28,9 @@ RUN cd External && \
     wget -nv https://download.pytorch.org/libtorch/cu118/libtorch-cxx11-abi-shared-with-deps-2.2.0%2Bcu118.zip -O  libtorch.zip && \
     unzip libtorch.zip -d .
 
+RUN wget -nv https://github.com/Kitware/CMake/releases/download/v3.28.3/cmake-3.28.3-linux-x86_64.tar.gz && \
+    tar xzf cmake-3.28.3-linux-x86_64.tar.gz
+
 ENV CC=gcc-9
 ENV CXX=g++-9
 ENV CUDAHOSTCXX=g++-9
@@ -43,5 +46,5 @@ COPY CMakeLists.txt .
 
 RUN mkdir build && \
     cd build && \
-    cmake -DHEADLESS=ON -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
+    ../cmake-3.28.3-linux-x86_64/bin/cmake -DHEADLESS=ON -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
     make -j10
