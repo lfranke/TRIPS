@@ -31,6 +31,7 @@ RUN cd External && \
 
 RUN wget -nv https://github.com/Kitware/CMake/releases/download/v3.28.3/cmake-3.28.3-linux-x86_64.tar.gz -O cmake-dist.tar.gz && \
     tar xzf cmake-dist.tar.gz && \
+    mv cmake-3.28.3-linux-x86_64 cmake-dist && \
     rm cmake-dist.tar.gz
 
 ENV CC=gcc-9
