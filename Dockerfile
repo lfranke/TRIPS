@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as build
 
 WORKDIR /app
 
@@ -24,16 +24,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 COPY External External
-#RUN cd External && \
-#    wget -nv https://download.pytorch.org/libtorch/cu118/libtorch-cxx11-abi-shared-with-deps-2.2.0%2Bcu118.zip -O  libtorch.zip && \
-#    unzip -qq libtorch.zip -d . \
-
 RUN cd External && \
-    wget -nv https://download.pytorch.org/libtorch/cu116/libtorch-cxx11-abi-shared-with-deps-1.13.1%2Bcu116.zip -O  libtorch.zip && \
-    unzip -qq libtorch.zip -d .
+    wget -nv https://download.pytorch.org/libtorch/cu116/libtorch-cxx11-abi-shared-with-deps-1.13.1%2Bcu116.zip -O libtorch.zip && \
+    unzip -qq libtorch.zip -d . && \
+    rm libtorch.zip
 
-RUN wget -nv https://github.com/Kitware/CMake/releases/download/v3.28.3/cmake-3.28.3-linux-x86_64.tar.gz && \
-    tar xzf cmake-3.28.3-linux-x86_64.tar.gz
+RUN wget -nv https://github.com/Kitware/CMake/releases/download/v3.28.3/cmake-3.28.3-linux-x86_64.tar.gz -O cmake-dist.tar.gz && \
+    tar xzf cmake-dist.tar.gz && \
+    rm cmake-dist.tar.gz
 
 ENV CC=gcc-9
 ENV CXX=g++-9
@@ -50,5 +48,16 @@ COPY CMakeLists.txt .
 
 RUN mkdir build && \
     cd build && \
-    ../cmake-3.28.3-linux-x86_64/bin/cmake -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
+    ../cmake-dist/bin/cmake -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
     make -j6
+
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    intel-mkl-full \
+    libfreeimage3 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/build /app/
