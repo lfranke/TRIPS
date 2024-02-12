@@ -36,7 +36,13 @@ Software Requirement: Conda (Anaconda/Miniconda)
 ## Install instructions Docker
 ### Install Docker
 Make sure to have docker installed with gpu support enables
-### Building image
+### Clone Repo
+```
+git clone git@github.com:lfranke/TRIPS.git
+cd TRIPS/
+git submodule update --init --recursive --jobs 0
+```
+### Build docker image
 ```
 docker build -t trips .
 ```
