@@ -34,6 +34,8 @@ Software Requirement: Conda (Anaconda/Miniconda)
 
 
 ## Install instructions Docker
+### Install Docker
+Make sure to have docker installed with gpu support enables
 ### Building image
 ```
 docker build -t trips .
