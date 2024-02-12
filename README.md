@@ -45,12 +45,6 @@ docker run -v {data_path}:/data -it trips /bin/bash
 ```
 ### Running viewer (Linux only)
 First enable X forwarding from docker
-Add these two lines to /etc/ssh/ssh_config
-```
-X11Forwarding   yes
-X11UseLocalhost no
-```
-Then run
 ```
 sudo xhost +local:docker
 ```
