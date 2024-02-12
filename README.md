@@ -58,7 +58,7 @@ sudo xhost +local:docker
 ```
 Now you can run the viewer
 ```
-docker run -v scenes/:/scenes --rm -it --net=host --env DISPLAY=$DISPLAY trips viewer --scene_dir /scenes/tt_train
+docker run -v ./scenes:/scenes --rm -it --net=host --env DISPLAY=$DISPLAY trips viewer --scene_dir /scenes/tt_train
 ```
 
 ## Install Instructions Linux
