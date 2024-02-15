@@ -33,6 +33,34 @@ Supported Compiler: g++-9 (Linux), MSVC (Windows, we used 19.31.31105.0)
 Software Requirement: Conda (Anaconda/Miniconda)
 
 
+## Install instructions Docker
+### Install Docker
+Make sure to have docker installed with gpu support enables
+### Clone Repo
+```
+git clone git@github.com:lfranke/TRIPS.git
+cd TRIPS/
+git submodule update --init --recursive --jobs 0
+```
+### Build docker image
+```
+docker build -t trips .
+```
+### Running training
+```
+docker run -v {data_path}:/data -it trips /bin/bash
+./train --config configs/train_normalnet.ini
+```
+### Running viewer (Linux only)
+First enable X forwarding from docker
+```
+sudo xhost +local:docker
+```
+Now you can run the viewer
+```
+docker run -v ./scenes:/scenes --rm -it --net=host --env DISPLAY=$DISPLAY trips viewer --scene_dir /scenes/tt_train
+```
+
 ## Install Instructions Linux
 
 ### Install Ubuntu Dependancies
