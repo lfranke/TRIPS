@@ -13,14 +13,17 @@ Important! This expects a dense reconstruction to be completed! A sparse point c
 Usage Example:
 
 ```shell
-export SCENE_BASE=/local.home/Projects/ADOP/additional_material/colmap/Playground/
+export SCENE_BASE=/local.home/Projects/TRIPS/additional_material/colmap/Playground/
 
 build/bin/colmap2adop --sparse_dir SCENE_BASE/sparse/0/ \
     --image_dir scenes/tt_playground/images/ \
-    --point_cloud_file SCENE_BASE/dense_point_cloud.ply \
+    --point_cloud_file SCENE_BASE/fused.ply \
     --output_path scenes/playground_test \
-    --scale_intrinsics 1 --render_scale 1 
+    --scale_intrinsics 1 --render_scale 1
 ```
+
+You can also checkout the `colmap2adop.sh`
+
 
 ### render_scale
 
@@ -68,7 +71,7 @@ To train ADOP on your scene you must convert it to the following format. If you 
         If all images are captured by the same camera, only one camera file is required!
         camera0.ini
         camera1.ini
-        ... 
+        ...
   - point_cloud.ply [required]
         positions, normals
   - images.txt      [required]
@@ -81,7 +84,7 @@ To train ADOP on your scene you must convert it to the following format. If you 
         0
         1
         0
-        ... 
+        ...
   - masks.txt [optional]
         0000.png
         0001.png
@@ -96,3 +99,40 @@ To train ADOP on your scene you must convert it to the following format. If you 
         10.5
         ...
 ```
+
+
+
+## COLMAP Usage
+
+When using COLMAP, you need to do the complete sparse reconstruction as well as part of the dense reconstruction to arrive at posed images as well as a dense point cloud.
+
+### COLMAP GUI
+Using the GUI, we need to do the following steps:
+* File -> New Project: selecting the images and a file for the database to store
+* Processing -> Feature Extraction:
+    * Usually use `RADIAL` as the camera model
+    * [optional] check shared for all images if all images where created by the same camera (we support multiple cameras, however this impacts speed)
+    * Extract
+* Processing -> Feature Matching:
+    * Default (Exhaustive) or others (see the [documentation](https://colmap.github.io/tutorial.html))
+* Reconstruction -> Start Reconstruction
+
+(this completes the sparse reconstruction)
+
+* Reconstruction -> Dense Reconstruction: Select a workspace (I used `reco_name/dense/`)
+  * Undistort
+  * Stereo
+  * Fusion
+
+### COLMAP CLI
+Using the command line interface, use the following `colmap` subcommands:
+
+* `feature_extractor`
+* `exhaustive_matcher` (or other matcher)
+* `mapper`
+
+* `image_undistorter`
+* `patch_match_stereo`
+* `stereo_fusion`
+
+(we don't need a mesher, as we use the dense point cloud instead of a triangle mesh)

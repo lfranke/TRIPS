@@ -8,7 +8,7 @@ Point-based radiance field rendering has demonstrated impressive results for nov
 In this paper, we present TRIPS (Trilinear Point Splatting), an approach that combines ideas from both Gaussian Splatting and ADOP. The fundamental concept behind our novel technique involves rasterizing points into a screen-space image pyramid, with the selection of the pyramid layer determined by the projected point size. This approach allows rendering arbitrarily large points using a single trilinear write. A lightweight neural network is then used to reconstruct a hole-free image including detail beyond splat resolution. Importantly, our render pipeline is entirely differentiable, allowing for automatic optimization of both point sizes and positions.
 Our evaluation demonstrate that TRIPS surpasses existing state-of-the-art methods in terms of rendering quality while maintaining a real-time frame rate of 60 frames per second on readily available hardware. This performance extends to challenging scenarios, such as scenes featuring intricate geometry, expansive landscapes, and auto-exposed footage.
 
-[[Project Page]](https://lfranke.github.io/trips/) [[Paper]](https://arxiv.org/abs/2401.06003) [[Youtube]](https://youtu.be/Nw4A1tIcErQ) [[Supplemental Data]](https://zenodo.org/records/10606698) 
+[[Project Page]](https://lfranke.github.io/trips/) [[Paper]](https://arxiv.org/abs/2401.06003) [[Youtube]](https://youtu.be/Nw4A1tIcErQ) [[Supplemental Data]](https://zenodo.org/records/10606698)
 
 ## Citation
 
@@ -33,33 +33,7 @@ Supported Compiler: g++-9 (Linux), MSVC (Windows, we used 19.31.31105.0)
 Software Requirement: Conda (Anaconda/Miniconda)
 
 
-## Install instructions Docker
-### Install Docker
-Make sure to have docker installed with gpu support enables
-### Clone Repo
-```
-git clone git@github.com:lfranke/TRIPS.git
-cd TRIPS/
-git submodule update --init --recursive --jobs 0
-```
-### Build docker image
-```
-docker build -t trips .
-```
-### Running training
-```
-docker run -v {data_path}:/data -it trips /bin/bash
-./train --config configs/train_normalnet.ini
-```
-### Running viewer (Linux only)
-First enable X forwarding from docker
-```
-sudo xhost +local:docker
-```
-Now you can run the viewer
-```
-docker run -v ./scenes:/scenes --rm -it --net=host --env DISPLAY=$DISPLAY trips viewer --scene_dir /scenes/tt_train
-```
+
 
 ## Install Instructions Linux
 
@@ -150,7 +124,7 @@ rm $CONDA/lib/libstdc++.so*
 ### Software Requirements
 
 * VS2022
-* CUDA 11.8 (make sure to at least include Nsight NVTX, Development/* , Runtime/Libraries/* and the Visual Studio Integration) 
+* CUDA 11.8 (make sure to at least include Nsight NVTX, Development/* , Runtime/Libraries/* and the Visual Studio Integration)
 * Cudnn (copy into 11.8 folder as per install instructions, see below)
 * conda (we used Anaconda3)
 
@@ -226,14 +200,45 @@ cmake --build build --config RelWithDebInfo -j
 ```
 The last cmake build call can take a lot of time.
 
+## Install Instructions Docker
+
+Thanks to user [abecadel](https://github.com/abecadel) for providing these Docker instructions.
+
+### Install Docker
+Make sure to have docker installed with gpu support enables
+### Clone Repo
+```
+git clone git@github.com:lfranke/TRIPS.git
+cd TRIPS/
+git submodule update --init --recursive --jobs 0
+```
+### Build docker image
+```
+docker build -t trips .
+```
+### Running training
+```
+docker run -v {data_path}:/data -it trips /bin/bash
+./train --config configs/train_normalnet.ini
+```
+### Running viewer (Linux only)
+First enable X forwarding from docker
+```
+sudo xhost +local:docker
+```
+Now you can run the viewer
+```
+docker run -v ./scenes:/scenes --rm -it --net=host --env DISPLAY=$DISPLAY trips viewer --scene_dir /scenes/tt_train
+```
+
 ## Running on pretrained models
 
-Supplemental materials link: [https://zenodo.org/records/10641253](https://zenodo.org/records/10641253)
+Supplemental materials link: [https://zenodo.org/records/10664666](https://zenodo.org/records/10664666)
 
 After a successful compilation, the best way to get started is to run `viewer` on the *tanks and temples* scenes
 using our pretrained models.
-First, download the scenes and extract them into `scenes/`.
-Now, download the model checkpoints and extract them into `experiments/`. Your folder structure should look like this:
+First, download the scenes (`tt_scenes.zip`) and extract them into `scenes/`.
+Now, download the model checkpoints (`tt_checkpoints.zip`) and extract them into `experiments/`. Your folder structure should look like this:
 
 ```shell
 TRIPS/
@@ -250,6 +255,8 @@ TRIPS/
     ...
 ```
 
+The supplemental data also includes data for the boat (checkpoint and scene combined in one zip), mipnerf360 scenes (in the resolutions used in the paper) and mipnerf360 checkpoints.
+
 ## Viewer
 
 Your working directory should be the trips root directory.
@@ -264,13 +271,18 @@ export CONDA=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
 ./build/bin/viewer --scene_dir scenes/tt_train
 ```
+(note that `tt_train` is the scene name of the Tanks&Temples locomotive scene)
 
 ### Windows
 
 ```shell
 ./build/bin/RelWithDebInfo/viewer.exe  --scene_dir scenes/tt_train
 ```
+(depending on the used shell, the full path `C:\....\TRIPS\build\bin\...` may have to be used)
+
 The path is different to the Linux path, the compile configuration is added (RelWithDebInfo)!
+
+(note that `tt_train` is the scene name of the Tanks&Temples locomotive scene)
 
 ### Viewer Controls
 The most important keyboard shortcuts are:
@@ -315,6 +327,7 @@ Windows:
 ```shell
 ./build/bin/RelWithDebInfo/train.exe --config configs/train_normalnet.ini
 ```
+(depending on the shell, the full path `C:\....\TRIPS\build\bin\...` may have to be used)
 
 Make again sure that the working directory is the root.
 Otherwise, the loss models will not be found.
@@ -325,6 +338,7 @@ You can override the options in these configs easily via the command line.
 ```shell
 ./build/bin/train --config configs/train_normalnet.ini --TrainParams.scene_names tt_train --TrainParams.name new_name_for_this_training
 ```
+(note that `tt_train` is the scene name of the Tanks&Temples locomotive scene)
 
 For scenes with extensive environments, consider adding an environment map with:
 ```shell
@@ -342,7 +356,7 @@ If GPU memory is sparse, consider lowering  `batch_size` (standard is 4),  `inne
 By default, every 8th image is removed during training and used as a test image. If you want to change this split, consider overriding which percentage of images should be kept out of training with:
 
 ```shell
---TrainParams.train_factor 0.1 
+--TrainParams.train_factor 0.1
 ```
 default is 0.125 (so 1/8).
 
@@ -360,3 +374,11 @@ Note: This will have an impact on training speed, as intermediate (full) images 
 If you do not want the viewer application, consider calling cmake with an additional `-DHEADLESS=ON`.
 This is usually done for training on remote machines.
 
+## Troubleshooting
+
+* The viewer starts with only one view (the model view) and crashes when switching to a different view
+    * This usually means, there are no experiments present for the scene. Ensure that you downloaded the checkpoints and extracted them to the `experiments/` folder or train the scene yourself.
+
+* What belongs in the `scenes/` folder and what in the `experiments/` folder?
+    * The `scenes/` folder has the output of the colmap2adop processing. This usually includes the `point_cloud.{ply/bin}`, the images and `poses.txt` (see [scenes/README.md](scenes/README.md)).
+    * The experiments folder contains checkpoints and is used to create checkpoints during training. These usually include the used config (params.ini) and subfolders with names based on the epoch (i.e. `ep0600` for epoch 600). These subfolders include the `.pth` torch tensor saving files as well as the test output imagses.
