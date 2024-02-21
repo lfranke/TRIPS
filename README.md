@@ -8,7 +8,7 @@ Point-based radiance field rendering has demonstrated impressive results for nov
 In this paper, we present TRIPS (Trilinear Point Splatting), an approach that combines ideas from both Gaussian Splatting and ADOP. The fundamental concept behind our novel technique involves rasterizing points into a screen-space image pyramid, with the selection of the pyramid layer determined by the projected point size. This approach allows rendering arbitrarily large points using a single trilinear write. A lightweight neural network is then used to reconstruct a hole-free image including detail beyond splat resolution. Importantly, our render pipeline is entirely differentiable, allowing for automatic optimization of both point sizes and positions.
 Our evaluation demonstrate that TRIPS surpasses existing state-of-the-art methods in terms of rendering quality while maintaining a real-time frame rate of 60 frames per second on readily available hardware. This performance extends to challenging scenarios, such as scenes featuring intricate geometry, expansive landscapes, and auto-exposed footage.
 
-[[Project Page]](https://lfranke.github.io/trips/) [[Paper]](https://arxiv.org/abs/2401.06003) [[Youtube]](https://youtu.be/Nw4A1tIcErQ) [[Supplemental Data]](https://zenodo.org/records/10606698)
+[[Project Page]](https://lfranke.github.io/trips/) [[Paper]](https://arxiv.org/abs/2401.06003) [[Youtube]](https://youtu.be/Nw4A1tIcErQ) [[Supplemental Data]](https://zenodo.org/records/10687419)
 
 ## Citation
 
@@ -233,7 +233,7 @@ docker run -v ./scenes:/scenes --rm -it --net=host --env DISPLAY=$DISPLAY trips 
 
 ## Running on pretrained models
 
-Supplemental materials link: [https://zenodo.org/records/10664666](https://zenodo.org/records/10664666)
+Supplemental materials link: [https://zenodo.org/records/10664666](https://zenodo.org/records/10687419)
 
 After a successful compilation, the best way to get started is to run `viewer` on the *tanks and temples* scenes
 using our pretrained models.
