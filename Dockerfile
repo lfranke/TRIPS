@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as build
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -49,37 +49,8 @@ COPY CMakeLists.txt .
 RUN mkdir build && \
     cd build && \
     ../cmake-dist/bin/cmake -DCMAKE_PREFIX_PATH="./External/libtorch/;" .. && \
-    make -j6
+    make -j6 && \
+    make install
 
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
-WORKDIR /app
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    intel-mkl-full \
-    libx11-dev \
-    xserver-xorg-dev \
-    xorg-dev \
-    libprotobuf23 \
-    libfreeimage3 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-COPY --from=build /app/build/bin/ /app
-COPY --from=build /app/configs/ /app/configs
-COPY --from=build /app/shader/ /app/shader
-COPY --from=build /app/loss/ /app/loss
-COPY --from=build /app/External/saiga/shader/ /app/External/saiga/shader
-COPY --from=build /app/build/External/saiga/src/saiga/core/libsaiga_core.so /app
-COPY --from=build /app/build/External/saiga/src/saiga/opengl/libsaiga_opengl.so /app
-COPY --from=build /app/build/External/saiga/src/saiga/cuda/libsaiga_cuda.so /app
-COPY --from=build /app/build/External/saiga/submodules/assimp/bin/ /app
-COPY --from=build /app/build/External/saiga/submodules/glfw/src/libglfw.so /app
-COPY --from=build /app/build/External/saiga/submodules/glfw/src/libglfw.so.3 /app
-COPY --from=build /app/build/External/saiga/submodules/glfw/src/libglfw.so.3.4 /app
-COPY --from=build /app/build/External/saiga/submodules/glog/libglog.pc /app
-COPY --from=build /app/build/External/saiga/submodules/glog/libglog.so /app
-COPY --from=build /app/build/External/saiga/submodules/glog/libglog.so.1 /app
-COPY --from=build /app/build/External/saiga/submodules/glog/libglog.so.0.6.0 /app
-COPY --from=build /app/External/libtorch/lib/ /app
-ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/app/
+RUN mkdir /app/experiments
+ENV PATH ${PATH}:/app/build/bin

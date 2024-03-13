@@ -228,7 +228,7 @@ sudo xhost +local:docker
 ```
 Now you can run the viewer
 ```
-docker run -v ./scenes:/scenes --rm -it --net=host --env DISPLAY=$DISPLAY trips viewer --scene_dir /scenes/tt_train
+docker run --device /dev/dri/ -v `pwd`/tt_scenes/:/scenes --rm -it --gpus all --net=host --env DISPLAY=$DISPLAY trips viewer --scene_dir /scenes/tnt_scenes/tt_train
 ```
 
 ## Running on pretrained models
