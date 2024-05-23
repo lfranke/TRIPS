@@ -16,8 +16,11 @@ Our evaluation demonstrate that TRIPS surpasses existing state-of-the-art method
 @article{franke2024trips,
     title={TRIPS: Trilinear Point Splatting for Real-Time Radiance Field Rendering},
     author={Linus Franke and Darius R{\"u}ckert and Laura Fink and Marc Stamminger},
-    journal={arXiv preprint arXiv:2401.06003},
-    year = {2024}
+    year = {2024},
+    journal = {Computer Graphics Forum},
+    volume = {43},
+    number = {2},
+    doi = {https://doi.org/10.1111/cgf.15012}
 }
 
 ```
