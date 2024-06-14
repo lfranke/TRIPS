@@ -22,7 +22,7 @@ class NeuralPointCloudCudaImpl : public NeuralPointCloud, public torch::nn::Modu
 {
    public:
     NeuralPointCloudCudaImpl(const Saiga::UnifiedMesh& model, bool use_grid_loss = false, float cell_ws_size = 1.f,
-                             AABB custom_point_manip_aabb = AABB(), bool use_pointsize = false);
+                             AABB custom_point_manip_aabb = AABB(), bool use_pointsize = true);
 
     void MakeOutlier(int max_index);
 
